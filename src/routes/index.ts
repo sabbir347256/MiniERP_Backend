@@ -2,6 +2,7 @@ import { Router } from "express";
 import { UserRoutes } from "../modules/users/user.routes";
 import { AuthRouter } from "../modules/auth/auth.routes";
 import { ProductRoutes } from "../modules/product/product.routes";
+import { SaleRoutes } from "../modules/Sales/sales.routes";
 
 
 export const router = Router();
@@ -18,6 +19,10 @@ const moduleRoutes = [
     {
         path : '/product',
         router : ProductRoutes
+    },
+    {
+        path : '/sales',
+        router : SaleRoutes
     },
 ];
 
