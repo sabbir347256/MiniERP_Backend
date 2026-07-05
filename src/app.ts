@@ -3,13 +3,13 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import httpStatus from "http-status-codes";
 import expressSession from 'express-session';
-import passport from "passport";
 import path from "path";
+import passport from "passport";
 import notFound from "./errorHelpers/notFound";
-
-import './config/passport';
 import { router } from "./routes";
 import { globalErrorHandler } from "./errorHelpers/globalErrorHandle";
+
+import './config/passport';
 
 const app = express();
 
@@ -47,7 +47,7 @@ app.use("/api/v1", router);
 
 app.get("/", async (req: Request, res: Response) => {
     res.status(httpStatus.OK).json({
-        message: "welcome to our bibah project server............",
+        message: "welcome to Inventory & Sales Management project server............",
     });
 });
 

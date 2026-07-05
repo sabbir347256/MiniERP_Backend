@@ -1,6 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status-codes";
 import passport from "passport";
+import { catchAsync } from "../utils/catchAsyn";
+import appError from "../../errorHelpers/appError";
+import { createUserToken } from "../utils/createUserToken";
+import { setAuthCookies } from "../utils/setCookies";
+import { sendResponse } from "../utils/utils";
 
 
 const credentialLogin = catchAsync(
@@ -48,15 +53,6 @@ const agentLogin = catchAsync(
         if (!user) {
           return next(new appError(401, info?.message || "Login failed"));
         }
-
-        // if (user.isApproved === false) {
-        //   return next(
-        //     new appError(
-        //       401,
-        //       "You will be able to log in after the admin approves your account."
-        //     )
-        //   );
-        // }
 
         const userTokens = await createUserToken(user);
         const { password: pass, ...rest } = user.toObject();
