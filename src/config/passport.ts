@@ -1,6 +1,7 @@
 import passport from "passport";
 import { Strategy as localStrategy } from "passport-local";
 import bcryptjs from "bcryptjs";
+import { User } from "../modules/users/user.model";
 
 passport.use(
   "user-local",
@@ -11,18 +12,12 @@ passport.use(
     },
     async (email, password, done) => {
       try {
-        const isUserExists = await User.findOne({ email });
+        const isUserExists = await User.findOne({ email }).select('+password');
 
         if (!isUserExists) {
           return done(null, false, { message: "User Does not Exist" });
         }
 
-        if (isUserExists.role === "AGENT" || isUserExists.role === "ADMIN") {
-          return done(null, false, {
-            message: "Agents and Admins are not allowed to login here. Please use the valid portal.",
-          });
-        }
-        
         const isPasswordMatch = await bcryptjs.compare(
           password,
           isUserExists?.password as string,
@@ -40,44 +35,6 @@ passport.use(
   ),
 );
 
-passport.use(
-  "admin",
-  new localStrategy(
-    {
-      usernameField: "email",
-      passwordField: "password",
-    },
-    async (email, password, done) => {
-      console.log(email)
-      try {
-        const isUserExists = await User.findOne({ email });
-
-        if (!isUserExists) {
-          return done(null, false, { message: "Agent Account Does not Exist" });
-        }
-
-        if (isUserExists.role !== "AGENT" && isUserExists.role !== "ADMIN") {
-          return done(null, false, {
-            message: "This portal is only for Agents and Admins.",
-          });
-        }
-
-        const isPasswordMatch = await bcryptjs.compare(
-          password,
-          isUserExists?.password as string,
-        );
-
-        if (!isPasswordMatch) {
-          return done(null, false, { message: "Incorrect Password" });
-        }
-
-        return done(null, isUserExists);
-      } catch (error) {
-        return done(error);
-      }
-    },
-  ),
-);
 
 
 passport.serializeUser((user: any, done) => {

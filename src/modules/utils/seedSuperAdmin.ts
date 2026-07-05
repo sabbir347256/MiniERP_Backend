@@ -1,7 +1,7 @@
 import bcryptjs from "bcryptjs";
 import { User } from "../users/user.model";
 import envVars from "../../config/envVars";
-import {Role } from "../users/user.interfaces";
+import { IsActive, Role } from "../users/user.interfaces";
 
 export const seedSuperAdmin = async () => {
     try {
@@ -24,7 +24,7 @@ export const seedSuperAdmin = async () => {
             email: envVars.SUPER_ADMIN_EMAIL as string,
             password: hashedPassword,
             role: Role.ADMIN, 
-            isActive: true,
+            isActive: IsActive.ACTIVE,
         });
     } catch (err) {
         console.log(err);

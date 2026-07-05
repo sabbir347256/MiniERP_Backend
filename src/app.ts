@@ -6,10 +6,10 @@ import expressSession from 'express-session';
 import path from "path";
 import passport from "passport";
 import notFound from "./errorHelpers/notFound";
-import { router } from "./routes";
 import { globalErrorHandler } from "./errorHelpers/globalErrorHandle";
 
 import './config/passport';
+import { router } from "./routes";
 
 const app = express();
 

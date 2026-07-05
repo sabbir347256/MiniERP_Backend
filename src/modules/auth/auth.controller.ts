@@ -11,6 +11,7 @@ import { sendResponse } from "../utils/utils";
 const credentialLogin = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     passport.authenticate("user-local", async (err: any, user: any, info: any) => {
+
       try {
         if (err) {
           return next(new appError(401, err));
