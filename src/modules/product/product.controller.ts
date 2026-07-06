@@ -6,6 +6,10 @@ import StatusCodes from 'http-status-codes';
 import QueryBuilder from "../utils/queryBuilder";
 
 const createProduct = catchAsync(async (req: Request, res: Response) => {
+  if (req.file && req.file.path) {
+    req.body.productImage = req.file.path;
+  }
+
   if (!req.body.productImage) {
     throw new Error('Image upload is required while creating a product.');
   }
@@ -35,12 +39,31 @@ const getAllProducts = catchAsync(async (req: Request, res: Response) => {
     success: true,
     meta,
     data: result,
-    message : 'AllProduct fetch successfully....!!!'
+    message: "All porduct fetching successfully.....!!"
+  });
+});
+
+const getSingleProduct = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const result = await Product.findById(id);
+  if (!result) {
+    throw new Error('Product not found');
+  }
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    data: result,
+    message : "Product View Successfully ...!!"
   });
 });
 
 const updateProduct = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
+
+  if (req.file && req.file.path) {
+    req.body.productImage = req.file.path;
+  }
+
   const result = await Product.findByIdAndUpdate(id, req.body, {
     new: true,
     runValidators: true,
@@ -71,4 +94,5 @@ export const ProductControllers = {
   getAllProducts,
   updateProduct,
   deleteProduct,
+  getSingleProduct
 };

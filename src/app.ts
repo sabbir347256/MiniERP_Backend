@@ -18,6 +18,8 @@ app.use(
     cors({
         origin: [
             "http://localhost:5173",
+            "https://erp.bibah.app",
+            "https://www.erp.bibah.app",
         ],
         credentials: true,
         methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],

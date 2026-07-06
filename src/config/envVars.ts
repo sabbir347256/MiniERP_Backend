@@ -12,6 +12,9 @@ const envVars = {
   JWT_REFRESH_EXPIRES: process.env.JWT_REFRESH_EXPIRES as string,
   SUPER_ADMIN_EMAIL: process.env.SUPER_ADMIN_EMAIL as string,
   SUPER_ADMIN_PASSWORD: process.env.SUPER_ADMIN_PASSWORD as string,
+  CLOUD_NAME: process.env.CLOUD_NAME as string,
+  CLOUD_API_KEY: process.env.CLOUD_API_KEY as string,
+  CLOUD_API_SECRET: process.env.CLOUD_API_SECRET as string,
 };
 
 export = envVars;

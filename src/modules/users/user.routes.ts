@@ -5,7 +5,7 @@ import { UserControllers } from './user.controller';
 
 const router = express.Router();
 
-router.post('/register', UserControllers.registerUser);
+router.post('/register',checkAuth(Role.ADMIN), UserControllers.registerUser);
 router.get('/', checkAuth(Role.ADMIN), UserControllers.getAllUsers);
 
 export const UserRoutes = router;
